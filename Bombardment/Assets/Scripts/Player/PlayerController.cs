@@ -1,4 +1,3 @@
-using UnityEditor.Search;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -14,10 +13,12 @@ public class PlayerController : MonoBehaviour
     // Internal fields
     [HideInInspector] public Vector2 movementVector;
     [HideInInspector] public Rigidbody rb;
+    [HideInInspector] public Animator anim;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>();
     }
     private void Start()
     {
@@ -39,6 +40,10 @@ public class PlayerController : MonoBehaviour
         float inputX = isRight ? 1f : isLeft ? -1f : 0f;
         float inputY = isUp ? 1f : isDown ? -1f : 0f;
         movementVector = new(inputX, inputY);
+
+        float speed = rb.velocity.magnitude;
+        float speedRate = speed / movementSpeed;
+        anim.SetFloat("fVelocity", speedRate);
 
         stateMachine.Update();
         
