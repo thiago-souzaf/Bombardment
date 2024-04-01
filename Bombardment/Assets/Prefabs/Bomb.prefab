@@ -4991,9 +4991,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80eb12a2092830945b46184b1ec3f98c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ExplosionDelay: 2
+  ExplosionDelay: 3
   go_explosionObject: {fileID: 2189960976745795468, guid: f1fabd1725b8e2b4b8f051536eb09b80,
     type: 3}
+  PlatformLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  ExplosionRadius: 4
+  ExplosionDamage: 10
 --- !u!1 &6390616800141472339
 GameObject:
   m_ObjectHideFlags: 0
