@@ -68,6 +68,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 10
+  DestroyFX: {fileID: 2225379469487571168, guid: b38646947b5b7dd49acf761275567cd1,
+    type: 3}
 --- !u!1001 &1589888718182758068
 PrefabInstance:
   m_ObjectHideFlags: 0
