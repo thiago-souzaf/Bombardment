@@ -18,6 +18,14 @@ public class Idle : State
 
     public override void Update()
     {
+        base.Update();
+
+        // Switch to jumping
+        if (controller.hasJumpInput)
+        {
+            controller.stateMachine.ChangeState(controller.jumpingState);
+        }
+
         // Switch to walking
         if (!controller.movementVector.IsZero())
         {

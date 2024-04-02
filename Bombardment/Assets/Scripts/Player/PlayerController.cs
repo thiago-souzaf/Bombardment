@@ -3,28 +3,36 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     // Public fields
-    public float movementSpeed = 10f;
+    public float MovementSpeed = 10f;
+    public float JumpPower = 10;
+    public float JumpMovementFactor = 1f;
+    public LayerMask platformsLayer;
 
     // StateMachine
     public StateMachine stateMachine;
     public Idle idleState;
     public Walking walkingState;
+    public Jumping jumpingState;
 
     // Internal fields
     [HideInInspector] public Vector2 movementVector;
     [HideInInspector] public Rigidbody rb;
     [HideInInspector] public Animator anim;
+    [HideInInspector] public Collider col;
+    [HideInInspector] public bool hasJumpInput;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
+        col = GetComponent<Collider>();
     }
     private void Start()
     {
         stateMachine = new();
         idleState = new(this);
         walkingState = new(this);
+        jumpingState = new(this);
         stateMachine.ChangeState(idleState);
     }
 
@@ -36,13 +44,15 @@ public class PlayerController : MonoBehaviour
         bool isLeft = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow);
         bool isRight = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow);
 
+        hasJumpInput = Input.GetKey(KeyCode.Space);
+
         // Create movement vector
         float inputX = isRight ? 1f : isLeft ? -1f : 0f;
         float inputY = isUp ? 1f : isDown ? -1f : 0f;
         movementVector = new(inputX, inputY);
 
         float speed = rb.velocity.magnitude;
-        float speedRate = speed / movementSpeed;
+        float speedRate = speed / MovementSpeed;
         anim.SetFloat("fVelocity", speedRate);
 
         stateMachine.Update();
@@ -59,7 +69,7 @@ public class PlayerController : MonoBehaviour
         stateMachine.LateUpdate();
     }
 
-    public Quaternion GetVectorAwayFromCamera()
+    public Quaternion GetCameraRotation()
     {
         Camera cam = Camera.main;
         float eulerY = cam.transform.eulerAngles.y;
@@ -68,6 +78,8 @@ public class PlayerController : MonoBehaviour
 
     public void RotateBodyToFaceInput()
     {
+        if (movementVector.IsZero()) return;
+
         // Calculate rotation
         Camera cam = Camera.main;
         Vector3 inputVector = new(movementVector.x, 0, movementVector.y);
@@ -78,5 +90,24 @@ public class PlayerController : MonoBehaviour
 
         // Apply rotation
         rb.MoveRotation(smoothRotation);
+    }
+
+    public bool DetectGround()
+    {
+        Vector3 origin = transform.position;
+        Bounds bounds = col.bounds;
+
+        float radius = bounds.size.x * 0.25f;
+
+        return Physics.CheckSphere(origin, radius, platformsLayer);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Vector3 origin = transform.position;
+        Bounds bounds = col.bounds;
+
+        float radius = bounds.size.x * 0.25f;
+        Gizmos.DrawSphere(origin , radius);
     }
 }

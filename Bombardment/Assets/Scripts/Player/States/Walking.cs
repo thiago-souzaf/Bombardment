@@ -21,6 +21,12 @@ public class Walking : State
     public override void Update()
     {
         base.Update();
+
+        if (controller.hasJumpInput)
+        {
+            controller.stateMachine.ChangeState(controller.jumpingState);
+        }
+
         if (controller.movementVector.IsZero())
         {
             controller.stateMachine.ChangeState(controller.idleState);
@@ -34,8 +40,8 @@ public class Walking : State
 
         // Create movement vector
         Vector3 walkVector = new Vector3(controller.movementVector.x, 0, controller.movementVector.y);
-        walkVector = controller.GetVectorAwayFromCamera() * walkVector;
-        walkVector *= controller.movementSpeed;
+        walkVector = controller.GetCameraRotation() * walkVector;
+        walkVector *= controller.MovementSpeed;
 
         // Apply input to character
         controller.rb.AddForce(walkVector);
