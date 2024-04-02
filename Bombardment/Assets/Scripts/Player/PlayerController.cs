@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public Idle idleState;
     public Walking walkingState;
     public Jumping jumpingState;
+    public Dead deadState;
 
     // Internal fields
     [HideInInspector] public Vector2 movementVector;
@@ -33,11 +34,17 @@ public class PlayerController : MonoBehaviour
         idleState = new(this);
         walkingState = new(this);
         jumpingState = new(this);
+        deadState = new(this);
         stateMachine.ChangeState(idleState);
     }
 
     private void Update()
     {
+        if (GameManager.Instance.IsGameOver && stateMachine.CurrentStateName != deadState.name)
+        {
+            stateMachine.ChangeState(deadState);
+        }
+
         // Read Input
         bool isUp = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
         bool isDown = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);

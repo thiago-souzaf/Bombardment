@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bombPrefabs:
   - {fileID: 5392541021968113998, guid: 7cbb139744748df46adc330d801d2aac, type: 3}
-  timeInterval: {x: 3, y: 6}
+  timeInterval: {x: 2, y: 3}
   spawnPoint: {fileID: 7225537951956933665}
   target: {fileID: 0}
   rangeInDegrees: 22

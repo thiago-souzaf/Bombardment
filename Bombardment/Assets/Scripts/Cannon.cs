@@ -21,6 +21,10 @@ public class Cannon : MonoBehaviour
 
     private void Update()
     {
+
+        // Ignore if game over
+        if (GameManager.Instance.IsGameOver) return;
+
         cooldown -= Time.deltaTime;
         if (cooldown < 0)
         {
