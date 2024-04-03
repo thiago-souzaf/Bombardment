@@ -2498,6 +2498,7 @@ GameObject:
   - component: {fileID: 6232721026141735849}
   - component: {fileID: 5714675907274793153}
   - component: {fileID: 7917050381274323313}
+  - component: {fileID: 4067988504892685371}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -2537,10 +2538,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2dd6877ed8695841a585eddfe823fcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 10
+  MovementSpeed: 10
+  JumpPower: 6
+  JumpMovementFactor: 0.2
+  platformsLayer:
+    serializedVersion: 2
+    m_Bits: 64
   movementVector: {x: 0, y: 0}
   rb: {fileID: 0}
   anim: {fileID: 0}
+  col: {fileID: 0}
+  hasJumpInput: 0
 --- !u!54 &6232721026141735849
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2612,6 +2620,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4067988504892685371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8318168119140144784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77cc76b66e915cf46bfd952e29109ec8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UnderwaterDrag: 3
+  UnderwaterAngularDrag: 1
+  AirDrag: 0
+  AirAngularDrag: 0.05
+  OceanYPos: 0
+  BuoyancyForce: 40
 --- !u!1 &8410729234128542409
 GameObject:
   m_ObjectHideFlags: 0
