@@ -18,13 +18,10 @@ public class Ocean : MonoBehaviour
         {
             GameManager.Instance.EndGame();
             Splash(other.transform.position);
-            print($"Colidiu com: {other.name}");
         }
         else if (other.gameObject.CompareTag("Bomb"))
         {
             Splash(other.transform.position);
-            print($"Colidiu com: {other.name}");
-
         }
 
     }
